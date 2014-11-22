@@ -4,9 +4,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 /**
  * Hello world!
@@ -14,9 +17,28 @@ import java.util.concurrent.Executors;
 public class TestLoggerApplication {
     private final Logger logger = LoggerFactory.getLogger(TestLoggerApplication.class);
     private ExecutorService executorService = Executors.newFixedThreadPool(250);
+    TestBean testBean = createTestBean();
 
+
+    void logMessagesInParallel(int threadCount) {
+        List<Future> futures = new ArrayList<Future>();
+        for (int i = 0; i < threadCount; i++) {
+            futures.add(executorService.submit(new Runnable() {
+                @Override
+                public void run() {
+                    logMessages(10);
+                }
+            }));
+        }
+        for (Future future : futures) {
+            try {
+                future.get();
+            } catch (InterruptedException | ExecutionException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
     void logMessages(int count) {
-        TestBean testBean = createTestBean();
         for (int i = 0; i < count; i++) {
             logMessage(testBean);
         }

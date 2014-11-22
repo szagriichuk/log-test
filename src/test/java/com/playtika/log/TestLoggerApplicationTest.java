@@ -15,6 +15,12 @@ public class TestLoggerApplicationTest {
     @Test
     public void testRunLoggingInOneThreadWithCount() throws Exception {
         TestLoggerApplication application = new TestLoggerApplication();
-        application.logMessages(100);
+        application.logMessages(1000);
+    }
+
+    @Test
+    public void testRunLoggingInParallel() throws Exception {
+        TestLoggerApplication application = new TestLoggerApplication();
+        application.logMessagesInParallel(1000000);
     }
 }
