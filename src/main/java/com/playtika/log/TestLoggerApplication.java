@@ -26,7 +26,7 @@ public class TestLoggerApplication {
             futures.add(executorService.submit(new Runnable() {
                 @Override
                 public void run() {
-                    logMessages(10);
+                    logMessages(1);
                 }
             }));
         }

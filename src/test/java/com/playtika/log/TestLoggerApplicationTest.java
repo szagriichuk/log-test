@@ -22,7 +22,7 @@ public class TestLoggerApplicationTest {
     public void testRunLoggingInParallel() throws Exception {
         long start = System.nanoTime();
         TestLoggerApplication application = new TestLoggerApplication();
-        application.logMessagesInParallel(100000);
+        application.logMessagesInParallel(10000);
         System.out.println(convertToMilliSec(System.nanoTime() - start));
     }
 
